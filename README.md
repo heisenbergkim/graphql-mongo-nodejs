@@ -6,6 +6,10 @@ graphql-mongo-nodejs
 
 This is a server boilerplate using GraphQL and MongoDB. Support subscriptions using GraphQL Yoga. 
 
+## prerequisite
+nodejs
+mongodb
+
 ## Getting started
 
 1. Clone this repo using `https://github.com/heisenbergkim/graphql-mongo-nodejs.git`
