@@ -1,6 +1,10 @@
 // The User schema.
 import User from "../../models/User";
 
+import BlockStorage from "../../models/BlockStorage";
+import TransactionStorage from "../../models/TransactionStorage";
+import ReceiptStorage from "../../models/ReceiptStorage";
+
 export default {
   Query: {
     user: (root, args) => {
@@ -18,7 +22,58 @@ export default {
             err ? reject(err) : resolve(res);
           });
       });
+    },
+    block: (root, args) => {
+      return new Promise((resolve, reject) => {
+        BlockStorage.findOne(args).exec((err, res) => {
+          err ? reject(err) : resolve(res);
+        });
+      });
+    },
+    blocks: () => {
+      return new Promise((resolve, reject) => {
+        BlockStorage.find({})
+          .populate()
+          .exec((err, res) => {
+            err ? reject(err) : resolve(res);
+          });
+      });
+    },
+    transaction: (root, args) => {
+      return new Promise((resolve, reject) => {
+        TransactionStorage.findOne(args).exec((err, res) => {
+          err ? reject(err) : resolve(res);
+        });
+      });
+    },
+    transactions: () => {
+      return new Promise((resolve, reject) => {
+        TransactionStorage.find({})
+          .populate()
+          .exec((err, res) => {
+            err ? reject(err) : resolve(res);
+          });
+      });
+    },
+    receipt: (root, args) => {
+      return new Promise((resolve, reject) => {
+        ReceiptStorage.findOne(args).exec((err, res) => {
+          err ? reject(err) : resolve(res);
+        });
+      });
+    },
+    receipts: () => {
+      return new Promise((resolve, reject) => {
+        ReceiptStorage.find({})
+          .populate()
+          .exec((err, res) => {
+            err ? reject(err) : resolve(res);
+          });
+      });
     }
+    // receipts2: () => {
+    //   return ReceiptStorage.find({});
+    // }
   },
   Mutation: {
     addUser: (root, { id, name, email }) => {

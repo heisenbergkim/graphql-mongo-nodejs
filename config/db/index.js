@@ -1,9 +1,14 @@
 import User from "../../models/User";
-// import Post from "../../models/Post";
+import BlockStorage from "../../models/BlockStorage";
+import TransactionStorage from "../../models/TransactionStorage";
+
+import ReceiptStorage from "../../models/ReceiptStorage";
 // import Comment from "../../models/Comment";
 
 export const models = {
-  User
-  //   Post,
+  User,
+  BlockStorage,
+  TransactionStorage,
+  ReceiptStorage
   //   Comment
 };

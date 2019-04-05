@@ -7,10 +7,16 @@ import cors from "cors";
 import schema from "./graphql/";
 import { models } from "./config/db/";
 
+import createType from "mongoose-schema-to-graphql";
+
 const app = express();
 const PORT = process.env.PORT || "4000";
 // const db = "Put your database URL here.";
 const db = "mongodb://localhost:27017/graphql-mongodb-server";
+
+const context = {
+  models
+};
 
 // Connect to MongoDB with Mongoose.
 mongoose
