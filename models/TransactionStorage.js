@@ -4,92 +4,72 @@ const Schema = mongoose.Schema;
 
 // Create the User Schema.
 const TransactionStorageSchema = new Schema({
-  number: {
+  transactionHash: {
+    type: String,
+    required: true
+  },
+  transactionIndex: {
     type: Number,
     required: true
   },
-  hash: {
+  blockHash: {
     type: String,
     required: true
   },
-  parentHash: {
-    type: String,
-    required: true
-  },
-  mixHash: {
-    type: String,
-    required: true
-  },
-  nonce: {
-    type: String,
-    required: true
-  },
-  sha3Uncles: {
-    type: String,
-    required: true
-  },
-  logsBloom: {
-    type: String,
-    required: true
-  },
-  transactionsRoot: {
-    type: String,
-    required: true
-  },
-  stateRoot: {
-    type: String,
-    required: true
-  },
-  receiptsRoot: {
-    type: String,
-    required: true
-  },
-  miner: {
-    type: String,
-    required: true
-  },
-  difficulty: {
-    type: String,
-    required: true
-  },
-  totalDifficulty: {
-    type: String,
-    required: true
-  },
-  extraData: {
-    type: String,
-    required: true
-  },
-  size: {
+  blockNumber: {
     type: Number,
     required: true
   },
-  gasLimit: {
-    type: Number,
-    required: true
+  from: {
+    type: String,
+    required: false //in case of Transaction
+  },
+  to: {
+    type: String,
+    required: false //in case of Transaction
   },
   gasUsed: {
     type: Number,
     required: true
   },
-  timestamp: {
+  cumulativeGasUsed: {
     type: Number,
     required: true
   },
-  transactions: {
-    type: "Array",
-    required: true
+  contractAddress: {
+    type: String,
+    required: false //in case of Transaction
   },
-  uncles: {
-    type: "Array",
-    required: true
+  logs: {
+    type: Array,
+    required: false
+  },
+  status: {
+    type: Boolean,
+    required: false
+  },
+  logsBloom: {
+    type: String,
+    required: false
+  },
+  v: {
+    type: String,
+    required: false
+  },
+  r: {
+    type: String,
+    required: false
+  },
+  s: {
+    type: String,
+    required: false
   }
 });
 
 const TransactionStorage = mongoose.model(
   "TransactionStorage",
   TransactionStorageSchema,
-  "TransactionStorage"
+  "transactionStorage" //collection name in mongoDB
 );
 
 export default TransactionStorage;

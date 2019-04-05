@@ -20,14 +20,14 @@ export default `
     transactionIndex: Int!
     blockHash: String!
     blockNumber: Int!
-    from: String!
-    to: String!
+    from: String
+    to: String
     gasUsed: Int!
     cumulativeGasUsed: Int!
-    contractAddress: String!
-    logs: [Logs]!
-    status: Boolean!
-    logsBloom: String!
+    contractAddress: String
+    logs: [Logs]
+    status: Boolean
+    logsBloom: String
     v: String!
     r: String!
     s: String!
