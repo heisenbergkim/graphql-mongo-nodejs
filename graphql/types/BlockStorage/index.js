@@ -1,36 +1,30 @@
 // BlockStorage GraphQL Types
 // should map files in model to files in GraphQL types
 export default `
-  type Logs {
-    logIndex:  Int
-    transactionIndex: Int
-    transactionHash: String
-    blockHash: String
-    blockNumber: Int
-    address: String
-    data: String
-    topics: String
-    type: String
-    id: String
 
-  }
+ 
 
   type BlockStorage {
-    transactionHash: String!
-    transactionIndex: Int!
-    blockHash: String!
-    blockNumber: Int!
-    from: String!
-    to: String!
-    gasUsed: Int!
-    cumulativeGasUsed: Int!
-    contractAddress: String!
-    logs: [Logs]!
-    status: Boolean!
-    logsBloom: String!
-    v: String!
-    r: String!
-    s: String!
+      number: Int!
+      hash: String!
+      parentHash: String!
+      mixHash: String
+      nonce: String
+      sha3Uncles: String
+      logsBloom: String
+      transactionsRoot: String
+      stateRoot: String
+      receiptsRoot: String
+      miner: String
+      difficulty: String
+      totalDifficulty: String
+      extraData: String
+      size: Int
+      gasLimit: Int
+      gasUsed: Int
+      timestamp: Int
+      transactions: [String]
+      uncles: [String]
   }
   type Query {
     block(number: Int!): BlockStorage

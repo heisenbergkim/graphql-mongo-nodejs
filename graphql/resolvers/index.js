@@ -4,6 +4,7 @@ import User from "../../models/User";
 import BlockStorage from "../../models/BlockStorage";
 import TransactionStorage from "../../models/TransactionStorage";
 import ReceiptStorage from "../../models/ReceiptStorage";
+import AbiStorage from "../../models/AbiStorage";
 
 export default {
   Query: {
@@ -34,6 +35,7 @@ export default {
       return new Promise((resolve, reject) => {
         BlockStorage.find({})
           .populate()
+          .sort({ number: -1 })
           .exec((err, res) => {
             err ? reject(err) : resolve(res);
           });
@@ -50,7 +52,28 @@ export default {
       return new Promise((resolve, reject) => {
         TransactionStorage.find({})
           .populate()
+          .sort({ blockNumber: -1 })
           .exec((err, res) => {
+            err ? reject(err) : resolve(res);
+          });
+      });
+    },
+    token: (root, args) => {
+      return new Promise((resolve, reject) => {
+        AbiStorage.findOne(args).exec((err, res) => {
+          err ? reject(err) : resolve(res);
+        });
+      });
+    },
+    tokens: () => {
+      return new Promise((resolve, reject) => {
+        AbiStorage.find({})
+          .populate()
+          .exec((err, res) => {
+            // let newData = JSON.stringify(res.abi);
+            // let insertObj = JSON.parse(newData);
+
+            // console.log("ABI : ", insertObj);
             err ? reject(err) : resolve(res);
           });
       });
@@ -67,10 +90,32 @@ export default {
         ReceiptStorage.find({})
           .populate()
           .exec((err, res) => {
+            // res = res.toObject();
             err ? reject(err) : resolve(res);
           });
       });
+    },
+    async receiptsAwait(_, { filter = {} }) {
+      const receiptsAwait = await ReceiptStorage.aggregate([
+        {
+          $lookup: {
+            from: "abis",
+            localField: "contractAddress",
+            foreignField: "to",
+            as: "contractInfoDoc"
+          }
+        },
+        { $unwind: "$contractInfoDoc" }
+      ]);
+      // }
+      // notice that I have ": any[]" after the "users" variable?
+      // That is because I am using TypeScript but you can remove
+      // this and it will work normally with pure JavaScript
+      // console.log(receiptsAwait);
+      // return receipts2.map(contractInfoDoc => contractInfoDoc.toObject());
+      return receiptsAwait;
     }
+
     // receipts2: () => {
     //   return ReceiptStorage.find({});
     // }

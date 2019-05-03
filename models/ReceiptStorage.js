@@ -1,9 +1,20 @@
 import mongoose from "mongoose";
+import AbiStorage from "../graphql/types/AbiStorage/";
+var assert = require("assert");
 
 const Schema = mongoose.Schema;
+// var ObjectId = mongoose.Schema.Types.ObjectId;
+// import ObjectId = Types.ObjectId;
 
 // Create the User Schema.
 const ReceiptStorageSchema = new Schema({
+  // workspaceId: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     // required: true,
+  //     ref: "AbiStorage" // this must match the name we assigned to the workspace model
+  //   }
+  // ],
   transactionHash: {
     type: String,
     required: true
@@ -66,10 +77,12 @@ const ReceiptStorageSchema = new Schema({
   }
 });
 
+ReceiptStorageSchema.set("toObject", { getters: true, virtuals: true });
+
 const ReceiptStorage = mongoose.model(
   "ReceiptStorage",
   ReceiptStorageSchema,
-  "receiptStorage"
+  "receiptStorage" //collection name in mongodb
 );
 
 export default ReceiptStorage;

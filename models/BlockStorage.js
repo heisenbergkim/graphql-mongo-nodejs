@@ -77,11 +77,11 @@ const BlockStorageSchema = new Schema({
     required: true
   },
   transactions: {
-    type: "Array",
+    type: Array,
     required: true
   },
   uncles: {
-    type: "Array",
+    type: Array,
     required: true
   }
 });
