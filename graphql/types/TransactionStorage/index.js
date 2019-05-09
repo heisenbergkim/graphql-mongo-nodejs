@@ -17,20 +17,20 @@ export default `
 
   type TransactionStorage {
     transactionHash: String!
-    transactionIndex: Int!
+    transactionIndex: Int
     blockHash: String!
     blockNumber: Int!
     from: String
     to: String
-    gasUsed: Int!
-    cumulativeGasUsed: Int!
+    gasUsed: Int
+    cumulativeGasUsed: Int
     contractAddress: String
     logs: [Logs]
     status: Boolean
     logsBloom: String
-    v: String!
-    r: String!
-    s: String!
+    v: String
+    r: String
+    s: String
   }
   type Query {
     transaction(transactionHash: String!): TransactionStorage
