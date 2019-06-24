@@ -117,6 +117,50 @@ export default {
       // console.log(receiptsAwait);
       // return receipts2.map(contractInfoDoc => contractInfoDoc.toObject());
       return receiptsAwait;
+    },
+
+    async receiptsAwaitMultiJoin(_, { filter = {} }) {
+      const receiptsAwait = await ReceiptStorage.aggregate([
+        {
+          $lookup: {
+            from: "abis",
+            localField: "contractAddress",
+            foreignField: "to",
+            as: "contractInfoDoc"
+          }
+        },
+        { $unwind: "$contractInfoDoc" },
+        { $sort : { blockNumber : -1} },
+// Join with blockStorage table
+        {
+            $lookup:{
+                from: "blockStorage", 
+                localField: "blockNumber", 
+                foreignField: "number",
+                as: "blockStorageDoc"
+            }
+        },
+        {   $unwind:"$blockStorageDoc" },
+// define which fields are you want to fetch
+        {   
+            $project:{
+                transactionHash  : "$contractInfoDoc.symbol",
+                timestamp : "$blockStorageDoc.timestamp",
+                FromAddr : "$contractInfoDoc.from",
+                ToAddr : "$contractInfoDoc.to",
+                Value : "$contractInfoDoc.value",
+                symbol : "$contractInfoDoc.symbol",
+                number : "$blockStorageDoc.number"
+            } 
+        }
+    ]);
+      // }
+      // notice that I have ": any[]" after the "users" variable?
+      // That is because I am using TypeScript but you can remove
+      // this and it will work normally with pure JavaScript
+      // console.log(receiptsAwait);
+      // return receipts2.map(contractInfoDoc => contractInfoDoc.toObject());
+      return receiptsAwaitMultiJoin;
     }
 
     // receipts2: () => {
