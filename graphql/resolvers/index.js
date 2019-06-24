@@ -69,6 +69,7 @@ export default {
       return new Promise((resolve, reject) => {
         AbiStorage.find({})
           .populate()
+          .sort({ number: -1 })
           .exec((err, res) => {
             // let newData = JSON.stringify(res.abi);
             // let insertObj = JSON.parse(newData);
