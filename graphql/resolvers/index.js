@@ -69,7 +69,7 @@ export default {
       return new Promise((resolve, reject) => {
         AbiStorage.find({})
           .populate()
-          .sort({ number: -1 })
+          .sort({ blockNumber: -1 })
           .exec((err, res) => {
             // let newData = JSON.stringify(res.abi);
             // let insertObj = JSON.parse(newData);
@@ -90,6 +90,7 @@ export default {
       return new Promise((resolve, reject) => {
         ReceiptStorage.find({})
           .populate()
+          .sort({ blockNumber: -1 })
           .exec((err, res) => {
             // res = res.toObject();
             err ? reject(err) : resolve(res);
@@ -106,7 +107,8 @@ export default {
             as: "contractInfoDoc"
           }
         },
-        { $unwind: "$contractInfoDoc" }
+        { $unwind: "$contractInfoDoc" },
+        { $sort : { blockNumber : -1} }
       ]);
       // }
       // notice that I have ": any[]" after the "users" variable?
